@@ -5604,7 +5604,7 @@ GameBoyCore.prototype.channel1OutputLevelSecondaryCache = function () {
 	this.channel1OutputLevelTrimaryCache();
 }
 GameBoyCore.prototype.channel1OutputLevelTrimaryCache = function () {
-	if (this.channel1CachedDuty[this.channel1DutyTracker]) {
+	if (this.channel1CachedDuty[this.channel1DutyTracker] && settings[14][0]) {
 		this.channel1currentSampleLeftTrimary = this.channel1currentSampleLeftSecondary;
 		this.channel1currentSampleRightTrimary = this.channel1currentSampleRightSecondary;
 	}
@@ -5640,7 +5640,7 @@ GameBoyCore.prototype.channel2OutputLevelSecondaryCache = function () {
 	this.channel2OutputLevelTrimaryCache();
 }
 GameBoyCore.prototype.channel2OutputLevelTrimaryCache = function () {
-	if (this.channel2CachedDuty[this.channel2DutyTracker]) {
+	if (this.channel2CachedDuty[this.channel2DutyTracker] && settings[14][1]) {
 		this.channel2currentSampleLeftTrimary = this.channel2currentSampleLeftSecondary;
 		this.channel2currentSampleRightTrimary = this.channel2currentSampleRightSecondary;
 	}
@@ -5660,7 +5660,7 @@ GameBoyCore.prototype.channel3OutputLevelCache = function () {
 	this.channel3OutputLevelSecondaryCache();
 }
 GameBoyCore.prototype.channel3OutputLevelSecondaryCache = function () {
-	if (this.channel3Enabled) {
+	if (this.channel3Enabled && settings[14][2]) {
 		this.channel3currentSampleLeftSecondary = this.channel3currentSampleLeft;
 		this.channel3currentSampleRightSecondary = this.channel3currentSampleRight;
 	}
@@ -5685,7 +5685,7 @@ GameBoyCore.prototype.channel4OutputLevelCache = function () {
 	this.channel4OutputLevelSecondaryCache();
 }
 GameBoyCore.prototype.channel4OutputLevelSecondaryCache = function () {
-	if (this.channel4Enabled) {
+	if (this.channel4Enabled && settings[14][3]) {
 		this.channel4currentSampleLeftSecondary = this.channel4currentSampleLeft;
 		this.channel4currentSampleRightSecondary = this.channel4currentSampleRight;
 	}

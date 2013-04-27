@@ -45,6 +45,10 @@ function windowingInitialize() {
 	document.getElementById("typed_arrays_disallow").checked = settings[5];
 	document.getElementById("gb_boot_rom_utilized").checked = settings[11];
 	document.getElementById("resize_smoothing").checked = settings[13];
+    document.getElementById("channel1").checked = settings[14][0];
+    document.getElementById("channel2").checked = settings[14][1];
+    document.getElementById("channel3").checked = settings[14][2];
+    document.getElementById("channel4").checked = settings[14][3];
 }
 function registerGUIEvents() {
 	cout("In registerGUIEvents() : Registering GUI Events.", -1);
@@ -325,6 +329,18 @@ function registerGUIEvents() {
 			gameboy.initLCD();
 		}
 	});
+    addEvent("click", document.getElementById("channel1"), function () {
+        settings[14][0] = document.getElementById("channel1").checked;
+    });
+    addEvent("click", document.getElementById("channel2"), function () {
+        settings[14][1] = document.getElementById("channel2").checked;
+    });
+    addEvent("click", document.getElementById("channel3"), function () {
+        settings[14][2] = document.getElementById("channel3").checked;
+    });
+    addEvent("click", document.getElementById("channel4"), function () {
+        settings[14][3] = document.getElementById("channel4").checked;
+    });
 	addEvent("click", document.getElementById("view_fullscreen"), fullscreenPlayer);
 	new popupMenu(document.getElementById("GameBoy_view_menu"), document.getElementById("GameBoy_view_popup"));
 	addEvent("click", document.getElementById("view_terminal"), function () { windowStacks[1].show() });
