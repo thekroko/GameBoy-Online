@@ -4,8 +4,8 @@
     <head>
         <style type="text/css">@import url(&quot;css/GameBoy.css&quot;);</style>
         <script type="text/javascript">
-    DEBUG_MESSAGES = false;
-    DEBUG_WINDOWING = false;
+    var DEBUG_MESSAGES = false;
+    var DEBUG_WINDOWING = false;
     window.onload = function () {
         windowingInitialize();
     }
@@ -14,7 +14,6 @@
         <script type="text/javascript" src="js/other/terminal.js"/>
         <script type="text/javascript" src="js/other/gui.js"/>
         <script type="text/javascript" src="js/other/base64.js"/>
-        <script type="text/javascript" src="js/other/transportHandler.js"/>
         <script type="text/javascript" src="js/other/json2.js"/>
         <script type="text/javascript" src="js/other/swfobject.js"/>
         <script type="text/javascript" src="js/other/resampler.js"/>
@@ -186,7 +185,6 @@
         <ul class="menu" id="GameBoy_file_popup">
             <li>Open As<ul class="menu">
                 <li id="data_uri_clicker">Base 64 Encoding</li>
-                <li id="external_file_clicker">URL Address</li>
                 <li id="internal_file_clicker">Local File</li>
             </ul></li>
             <li id="save_SRAM_state_clicker">Save Game Memory</li>

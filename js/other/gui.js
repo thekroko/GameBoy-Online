@@ -95,36 +95,6 @@ function registerGUIEvents() {
 			}
 		}
 	});
-	addEvent("click", document.getElementById("external_file_clicker"), function () {
-		var address = prompt("Please input the ROM image's URL:", "");
-		if (address != null && address.length > 0) {
-			try {
-				new Ajax({
-					URL:"res/proxy.php",
-					GET:["url=" + escape(address)],
-					Accept:"TEXT",
-					Cached:true,
-					Fail:function (error_message) {
-						cout("Failed to load the ROM file through XmlHttpRequest.\r\nReason: " + error_message, 2);
-					},
-					Complete:function () {
-						try {
-							var romStream = base64_decode(arguments[1]);
-							cout(romStream.length + " bytes of base64 decoded data retrieved by XHR (text length of " + arguments[1].length + ").", 0);
-							initPlayer();
-							start(mainCanvas, romStream);
-						}
-						catch (error) {
-							alert(error.message + " file: " + error.fileName + " line: " + error.lineNumber);
-						}
-					}
-				});
-			}
-			catch (error) {
-				alert(error.message + " file: " + error.fileName + " line: " + error.lineNumber);
-			}
-		}
-	});
 	addEvent("click", document.getElementById("set_volume"), function () {
 		if (GameBoyEmulatorInitialized()) {
 			var volume = prompt("Set the volume here:", "1.0");
