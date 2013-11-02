@@ -129,28 +129,55 @@ XAudioServer.prototype.executeCallback = function () {
 }
 //DO NOT CALL THIS, the lib calls this internally!
 XAudioServer.prototype.initializeAudio = function () {
-	try {
-		this.initializeMozAudio();
-	}
-	catch (error) {
-		try {
-			this.initializeWebAudio();
-		}
-		catch (error) {
-			try {
-				this.initializeMediaStream();
-			}
-			catch (error) {
-				try {
-					this.initializeFlashAudio();
-				}
-				catch (error) {
-					this.audioType = -1;
-					this.failureCallback();
-				}
-			}
-		}
-	}
+    if (navigator.platform == "MacIntel" || navigator.platform == "MacPPC") {
+        //Moz Audio Data API works better on mac:
+        try {
+            this.initializeMozAudio();
+        }
+        catch (error) {
+            try {
+                this.initializeWebAudio();
+            }
+            catch (error) {
+                try {
+                    this.initializeMediaStream();
+                }
+                catch (error) {
+                    try {
+                        this.initializeFlashAudio();
+                    }
+                    catch (error) {
+                        this.audioType = -1;
+                        this.failureCallback();
+                    }
+                }
+            }
+        }
+    }
+    else {
+        try {
+            this.initializeWebAudio();
+        }
+        catch (error) {
+            try {
+                this.initializeMozAudio();
+            }
+            catch (error) {
+                try {
+                    this.initializeMediaStream();
+                }
+                catch (error) {
+                    try {
+                        this.initializeFlashAudio();
+                    }
+                    catch (error) {
+                        this.audioType = -1;
+                        this.failureCallback();
+                    }
+                }
+            }
+        }
+    }
 }
 XAudioServer.prototype.initializeMediaStream = function () {
 	this.audioHandleMediaStream = new Audio();
@@ -174,12 +201,12 @@ XAudioServer.prototype.initializeMozAudio = function () {
 	this.audioHandleMoz.volume = XAudioJSVolume;
 	this.samplesAlreadyWritten = 0;
 	this.audioType = 0;
-	if (navigator.platform != "MacIntel" && navigator.platform != "MacPPC") {
+	//if (navigator.platform != "MacIntel" && navigator.platform != "MacPPC") {
 		//Add some additional buffering space to workaround a moz audio api issue:
 		var bufferAmount = (this.XAudioJSSampleRate * XAudioJSChannelsAllocated / 10) | 0;
 		bufferAmount -= bufferAmount % XAudioJSChannelsAllocated;
 		this.samplesAlreadyWritten -= bufferAmount;
-	}
+	//}
     this.initializeResampler(XAudioJSMozAudioSampleRate);
 }
 XAudioServer.prototype.initializeWebAudio = function () {
@@ -194,12 +221,14 @@ XAudioServer.prototype.initializeWebAudio = function () {
     }
     if (XAudioJSWebAudioAudioNode) {
         XAudioJSWebAudioAudioNode.disconnect();
+        XAudioJSWebAudioAudioNode.onaudioprocess = null;
+        XAudioJSWebAudioAudioNode = null;
     }
     try {
-        XAudioJSWebAudioAudioNode = XAudioJSWebAudioContextHandle.createScriptProcessor(XAudioJSSamplesPerCallback, 1, XAudioJSChannelsAllocated);	//Create the js event node.
+        XAudioJSWebAudioAudioNode = XAudioJSWebAudioContextHandle.createScriptProcessor(XAudioJSSamplesPerCallback, 0, XAudioJSChannelsAllocated);	//Create the js event node.
     }
     catch (error) {
-        XAudioJSWebAudioAudioNode = XAudioJSWebAudioContextHandle.createJavaScriptNode(XAudioJSSamplesPerCallback, 1, XAudioJSChannelsAllocated);	//Create the js event node.
+        XAudioJSWebAudioAudioNode = XAudioJSWebAudioContextHandle.createJavaScriptNode(XAudioJSSamplesPerCallback, 0, XAudioJSChannelsAllocated);	//Create the js event node.
     }
     XAudioJSWebAudioAudioNode.onaudioprocess = XAudioJSWebAudioEvent;																			//Connect the audio processing event to a handling function so we can manipulate output
     XAudioJSWebAudioAudioNode.connect(XAudioJSWebAudioContextHandle.destination);																//Send and chain the output of the audio manipulation to the system audio output.
