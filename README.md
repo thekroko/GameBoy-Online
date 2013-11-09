@@ -19,18 +19,20 @@ GNU General Public License for more details.*
 Known browsers to work well in:
 -------------------------------
 
-* Firefox 4+ (Windows 7, Windows Vista, Mac OS X)
+* Firefox 4-27 (Windows 7, Windows Vista, Mac OS X)
 * Google Chrome 18+
 * Safari 5.1.5+
 
 Browsers that suck at performance or fail to run the code correctly:
 --------------------------------------------------------------------
 
-* Firefox 4+ (Linux + Windows XP versions of Firefox have audio lockup bugs)
+* Firefox 4+ (*nix versions of Firefox have audio lockup bugs)
+* Firefox 28+ (Web Audio API creates 500 ms or greater latency, forced by Firefox)
 * Opera (Crashes + Slow + Graphics Glitches)
 * Safari 5.1.X (Below 5.1.5) (Slow or crashes)
 * IE 1-8 (Cannot run)
-* IE 9-10 (Slow)
+* IE 9-10 (Slow, no audio support)
+* IE 11 (No audio support)
 * Firefox 1-3.6 (Slow)
 * ALL VERSIONS OF MOBILE SAFARI AND OPERA (Stop pestering me, iOS just **CAN'T** run this well.)
 
