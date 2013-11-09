@@ -26,9 +26,9 @@ Known browsers to work well in:
 Browsers that suck at performance or fail to run the code correctly:
 --------------------------------------------------------------------
 
-* Firefox 4+ (*nix versions of Firefox have audio lockup bugs)
+* Firefox 4+ (*nix versions of Firefox have audio lockup bugs) - Retest this
 * Firefox 28+ (Web Audio API creates 500 ms or greater latency, forced by Firefox)
-* Opera (Crashes + Slow + Graphics Glitches)
+* Opera (Crashes + Slow + Graphics Glitches) - Retest this
 * Safari 5.1.X (Below 5.1.5) (Slow or crashes)
 * IE 1-8 (Cannot run)
 * IE 9-10 (Slow, No native audio support (Requires flash bridge in the audio lib))
