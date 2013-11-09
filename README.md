@@ -31,8 +31,8 @@ Browsers that suck at performance or fail to run the code correctly:
 * Opera (Crashes + Slow + Graphics Glitches)
 * Safari 5.1.X (Below 5.1.5) (Slow or crashes)
 * IE 1-8 (Cannot run)
-* IE 9-10 (Slow, no audio support)
-* IE 11 (No audio support)
+* IE 9-10 (Slow, No native audio support (Requires flash bridge in the audio lib))
+* IE 11 (No native audio support (Requires flash bridge in the audio lib))
 * Firefox 1-3.6 (Slow)
 * ALL VERSIONS OF MOBILE SAFARI AND OPERA (Stop pestering me, iOS just **CAN'T** run this well.)
 
