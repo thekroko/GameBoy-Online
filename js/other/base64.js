@@ -67,10 +67,10 @@ function base64_decode(data) {
 	return decode64;
 }
 function to_little_endian_dword(str) {
-	return to_little_endian_word(str) + String.fromCharCode((str >> 16) & 0xFF, (str >> 24) & 0xFF);
+	return to_little_endian_word(str) + to_little_endian_word(str >> 16);
 }
 function to_little_endian_word(str) {
-	return to_byte(str) + String.fromCharCode((str >> 8) & 0xFF);
+	return to_byte(str) + to_byte(str >> 8);
 }
 function to_byte(str) {
 	return String.fromCharCode(str & 0xFF);
