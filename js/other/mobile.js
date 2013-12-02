@@ -13,24 +13,39 @@ var keyZones = [
   ["start", [13]]
 ];
 var cout = console.log.bind(console);
-function loadGame () {
+function startGame (blob) {
+  var binaryHandle = new FileReader();
+  binaryHandle.onload = function () {
+    if (this.readyState === 2) {
+      try {
+        start(mainCanvas, this.result);
+      } catch (e) {
+        alert(e.message);
+      }
+    }
+  };
+  binaryHandle.readAsBinaryString(blob);
+};
+
+function loadViaMozActivity () {
+  var activity = new MozActivity({
+    name: "pick",
+    data: {},
+  });
+  activity.onsuccess = function () {
+    startGame(this.result.blob);
+  };
+  activity.onerror = function () {
+    alert(this.error.name);
+  };
+};
+
+function loadViaXHR () {
   var xhr = new XMLHttpRequest();
-  xhr.open("GET", "pokemon_red.gb");
+  xhr.open("GET", "insert_relative_path_to_gb_rom_here");
   xhr.responseType = "blob";
   xhr.onload = function () {
-    var blob = new Blob([this.response], { type: "text/plain" });
-    var binaryHandle = new FileReader();
-    binaryHandle.onload = function () {
-      if (this.readyState === 2) {
-        console.log("File loaded");
-        try {
-          start(mainCanvas, this.result);
-        } catch (e) {
-          console.error(e);
-        }
-      }
-    };
-    binaryHandle.readAsBinaryString(blob);
+    startGame(new Blob([this.response], { type: "text/plain" }));
   };
   xhr.send();
 };
@@ -90,7 +105,7 @@ function windowingInitialize() {
 	mainCanvas = document.getElementById("mainCanvas");
   registerTouchEventShim();
   window.onunload = autoSave;
-  loadGame();
+  ("MozActivity" in window ? loadViaMozActivity : loadViaXHR)();
 }
 var DEBUG_MESSAGES = false;
 var DEBUG_WINDOWING = false;
