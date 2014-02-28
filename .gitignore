@@ -7,5 +7,6 @@ css/.DS_Store
 js/other/.DS_Store
 
 *.gb
+*.gbc
 *.swp
 
