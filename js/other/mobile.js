@@ -80,29 +80,12 @@ function registerTouchEventShim () {
   shim([
     $("a_button_group"),
     $("b_button_group"),
-    $("arrow_up"),
-    $("arrow_down"),
-    $("arrow_right"),
-    $("arrow_left"),
-    $("select_button_group"),
-    $("start_button_group")
   ]);
-};
-
-var gameBoyColors = ["#33B678", "#FFDC2B", "#F61300", "#0356F2"];
-function pickRandomColor () {
-  var nintendo = $("nintendo");
-  $("gameboy_shell").style.backgroundColor =
-    $("on_off").style.color =
-    nintendo.style.borderColor =
-    nintendo.style.color =
-    gameBoyColors[(gameBoyColors.length * Math.random()) | 0];
 };
 
 function windowingInitialize() {
 	cout("windowingInitialize() called.", 0);
-  pickRandomColor();
-	mainCanvas = document.getElementById("mainCanvas");
+  mainCanvas = document.getElementById("mainCanvas");
   registerTouchEventShim();
   window.onunload = autoSave;
   ("MozActivity" in window ? loadViaMozActivity : loadViaXHR)();
