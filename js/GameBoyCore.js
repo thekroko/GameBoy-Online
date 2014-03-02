@@ -5076,6 +5076,11 @@ GameBoyCore.prototype.JoyPadEvent = function (key, down) {
 	this.memory[0xFF00] = (this.memory[0xFF00] & 0x30) + ((((this.memory[0xFF00] & 0x20) == 0) ? (this.JoyPad >> 4) : 0xF) & (((this.memory[0xFF00] & 0x10) == 0) ? (this.JoyPad & 0xF) : 0xF));
 	this.CPUStopped = false;
 }
+GameBoyCore.prototype.SetInput = function (data) {
+        this.JoyPad = data;
+	this.memory[0xFF00] = (this.memory[0xFF00] & 0x30) + ((((this.memory[0xFF00] & 0x20) == 0) ? (this.JoyPad >> 4) : 0xF) & (((this.memory[0xFF00] & 0x10) == 0) ? (this.JoyPad & 0xF) : 0xF));
+	this.CPUStopped = false;
+}
 GameBoyCore.prototype.GyroEvent = function (x, y) {
 	x *= -100;
 	x += 2047;
@@ -5754,11 +5759,27 @@ GameBoyCore.prototype.run = function () {
 		}
 	}
 }
+
+// Tick Synchronization
+var ticks = 0;
+var ticksDest = 0;
+var ticksTable = [];
+
 GameBoyCore.prototype.executeIteration = function () {
 	//Iterate the interpreter loop:
 	var opcodeToExecute = 0;
 	var timedTicks = 0;
+
 	while (this.stopEmulator == 0) {
+	        if (ticks >= ticksDest) {
+		  if (ticksTable.length == 0) {
+	            this.iterationEndRoutine();
+  		    return; // ran out of sync frames; pause emulation
+		  }
+		  var row = ticksTable.shift();
+		  ticksDest = row.t;
+		}
+	        ticks++;
 		//Interrupt Arming:
 		switch (this.IRQEnableDelay) {
 			case 1:
